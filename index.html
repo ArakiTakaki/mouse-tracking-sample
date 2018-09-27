@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+
+
+  <h1>TruckingExample</h1>
+  <div>
+    <img src="https://placehold.jp/150x150.png" alt="" id="sample">
+  </div>
+  <video id="myVideo" width="400" height="300" autoplay="1" ></video>
+
+<script type="text/javascript">
+// googleChrome or mozを取得してくるっぽい？
+navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || window.navigator.mozGetUserMedia;
+window.URL = window.URL || window.webkitURL;
+
+var video = document.getElementById('myVideo');
+var localStream = null;
+
+// callbackでstreamの情報を取得する。
+// getUserMedia(attribute:obj, success:func, error:func)
+navigator.getUserMedia({video: true, audio: false},
+  function(stream) { // for success case
+    console.log(stream);
+    video.src = window.URL.createObjectURL(stream);
+  },
+  function(err) { // for error case
+    console.log(err);
+  }
+);
+</script>
+
+<script>
+
+// t2 のコンテンツを変更する関数
+function testContent(event) {
+  console.log("X軸 : " + event.screenX + " \t Y軸 : " + event.screenY);
+}
+function onClick(event) {
+  console.log("onClick")
+  console.log(event);
+}
+
+// イベントリスナーをsample に追加
+var el = document.getElementById("sample");
+el.addEventListener("mousemove", testContent);
+el.addEventListener("click",onClick);
+</script>
+</body>
+</html>
